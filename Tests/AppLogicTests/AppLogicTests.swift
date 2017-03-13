@@ -11,6 +11,12 @@ class AppLogicTests: XCTestCase {
         ("testWithSpace", testWithSpace)
     ]
     
+    func testHappyPath() throws {
+        let drop = try makeDroplet()
+        let request = try Request(method: .get, uri: "/test/testHappy")
+        let response = try drop.respond(to: request)
+        XCTAssertEqual(response.body.bytes?.string, "testHappy")
+    }
 
     func testWithSpace() throws {
         let drop = try makeDroplet()
