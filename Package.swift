@@ -1,7 +1,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "NodesVaporApp",
+    name: "SlashBugApp",
     targets: [
         Target(name: "App", dependencies: ["AppLogic"])
     ],

@@ -8,16 +8,29 @@ import HTTP
 
 class AppLogicTests: XCTestCase {
     static var allTests = [
-        ("testExampleEndpoint", testExampleEndpoint)
+        ("testWithSpace", testWithSpace)
     ]
     
-    func testExampleEndpoint() throws {
+
+    func testWithSpace() throws {
         let drop = try makeDroplet()
-        let request = try Request(method: .get, uri: "/test")
-        
+        let request = try Request(method: .get, uri: "/test/the%20name")
         let response = try drop.respond(to: request)
-        XCTAssertEqual(response.status, .ok)
-        XCTAssertEqual(response.body.bytes?.string, "Hello, World!")
+        XCTAssertEqual(response.body.bytes?.string, "the name")
+    }
+    
+    func testWithSlash() throws {
+        let drop = try makeDroplet()
+        let request = try Request(method: .get, uri: "/test/Test%20with%20%2F%20slash")
+        let response = try drop.respond(to: request)
+        XCTAssertEqual(response.body.bytes?.string, "Test with / slash")
+    }
+    
+    func testWithPunctuation() throws {
+        let drop = try makeDroplet()
+        let request = try Request(method: .get, uri: "/test/Test%20with%20&!%25=%60%22")
+        let response = try drop.respond(to: request)
+        XCTAssertEqual(response.body.bytes?.string, "Test with &!%=`")
     }
 }
 
